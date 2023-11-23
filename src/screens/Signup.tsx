@@ -5,8 +5,13 @@ import {
     Text,
     Input,
     Button,
-    FormControl
+    FormControl,
+    HStack
 } from "native-base";
+
+import NomeSvg from "../../assets/Nome.svg";
+import EmailSvg from "../../assets/E-mail.svg";
+import PasswordSvg from "../../assets/Senha.svg";
 
 import * as yup from "yup";
 
@@ -110,30 +115,43 @@ export function Signup() {
 
                         return (
                             <FormControl isInvalid={invalid} mb={2}>
-                                <Input
-                                    onChangeText={onChange}
-                                    value={value}
-                                    autoCapitalize="words"
-                                    bg="gray.700"
-                                    borderWidth={2}
-                                    borderColor="transparent"
-                                    borderRadius={10}
-                                    height={65}
-                                    fontFamily="body"
-                                    fontSize="sm"
-                                    px={5}
-                                    color="white.100"
-                                    placeholderTextColor="gray.300"
-                                    placeholder="Full name"
-                                    mb={4}
-                                    _focus={{
-                                        bg: "gray.700",
-                                        borderWidth: 1.5,
-                                        borderColor: "orange.700"
-                                    }}
-                                />
 
-                                <FormControl.ErrorMessage>
+                                <HStack
+                                    alignItems="center"
+                                    height={65}
+                                    bg="gray.700"
+                                    borderColor={invalid ? "red.700" : "transparent"}
+                                    borderWidth={2}
+                                    borderRadius={10}
+                                    mb={4}
+                                    px={5}
+
+                                >
+
+                                    <NomeSvg width={24} height={24} />
+                                    <Input
+
+                                        flex={1}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        fontFamily="body"
+                                        borderColor="transparent"
+                                        borderWidth={0}
+
+                                        color="white.100"
+                                        placeholderTextColor="gray.300"
+                                        placeholder="Full name"
+                                        fontSize="sm"
+                                        _focus={{
+                                            bg: "gray.700",
+                                            borderWidth: 0,
+                                            borderColor: "transparent"
+                                        }}
+                                    />
+
+                                </HStack>
+
+                                <FormControl.ErrorMessage mt={-2} mb={2}>
                                     {errorMessage}
                                 </FormControl.ErrorMessage>
                             </FormControl>
@@ -152,31 +170,45 @@ export function Signup() {
                         return (
 
                             <FormControl isInvalid={invalid} mb={2}>
-                                <Input
-                                    onChangeText={onChange}
-                                    value={value}
-                                    autoCapitalize="none"
-                                    bg="gray.700"
-                                    borderWidth={2}
-                                    borderColor="transparent"
-                                    borderRadius={10}
+
+                                <HStack
+                                    alignItems="center"
                                     height={65}
-                                    fontFamily="body"
-                                    fontSize="sm"
-                                    px={5}
-                                    color="white.100"
-                                    placeholderTextColor="gray.300"
-                                    placeholder="Username"
+                                    bg="gray.700"
+                                    borderColor={invalid ? "red.700" : "transparent"}
+                                    borderWidth={2}
+                                    borderRadius={10}
                                     mb={4}
-                                    _focus={{
-                                        bg: "gray.700",
-                                        borderWidth: 1.5,
-                                        borderColor: "orange.700"
-                                    }}
+                                    px={5}
+                                >
+                                    <NomeSvg width={24} height={24} />
 
-                                />
+                                    <Input
 
-                                <FormControl.ErrorMessage>
+                                        flex={1}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        autoCapitalize="none"
+                                        bg="gray.700"
+                                        borderColor={"transparent"}
+                                        borderWidth={0}
+                                        fontFamily="body"
+                                        fontSize="sm"
+                                        color="white.100"
+                                        placeholderTextColor="gray.300"
+                                        placeholder="Username"
+                                        _focus={{
+                                            bg: "gray.700",
+                                            borderWidth: 0,
+                                            borderColor: "transparent"
+                                        }}
+
+                                    />
+
+
+                                </HStack>
+
+                                <FormControl.ErrorMessage mt={-2} mb={2}>
                                     {errorMessage}
                                 </FormControl.ErrorMessage>
 
@@ -195,30 +227,48 @@ export function Signup() {
 
                         return (
                             <FormControl isInvalid={invalid} mb={2}>
-                                <Input
-                                    onChangeText={onChange}
-                                    value={value}
-                                    keyboardType="email-address"
-                                    bg="gray.700"
-                                    borderWidth={2}
-                                    borderColor="transparent"
-                                    borderRadius={10}
-                                    height={65}
-                                    fontFamily="body"
-                                    fontSize="sm"
-                                    px={5}
-                                    color="white.100"
-                                    placeholderTextColor="gray.300"
-                                    placeholder="E-mail"
-                                    mb={4}
-                                    _focus={{
-                                        bg: "gray.700",
-                                        borderWidth: 1.5,
-                                        borderColor: "orange.700"
-                                    }}
 
-                                />
-                                <FormControl.ErrorMessage>
+                                <HStack
+                                    alignItems="center"
+                                    height={65}
+                                    bg="gray.700"
+                                    borderColor={invalid ? "red.700" : "transparent"}
+                                    borderWidth={2}
+                                    borderRadius={10}
+                                    mb={4}
+                                    px={5}
+                                >
+                                    <EmailSvg width={24} height={24} />
+
+                                    <Input
+
+                                        flex={1}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        keyboardType="email-address"
+                                        bg="gray.700"
+
+                                        borderColor="transparent"
+                                        borderWidth={0}
+                                        borderRadius={10}
+
+                                        fontFamily="body"
+                                        fontSize="sm"
+
+                                        color="white.100"
+                                        placeholderTextColor="gray.300"
+                                        placeholder="E-mail"
+
+                                        _focus={{
+                                            bg: "gray.700",
+                                            borderWidth: 0,
+                                            borderColor: "transparent"
+                                        }}
+
+                                    />
+
+                                </HStack>
+                                <FormControl.ErrorMessage mt={-2} mb={2}>
                                     {errorMessage}
                                 </FormControl.ErrorMessage>
 
@@ -238,31 +288,48 @@ export function Signup() {
                         return (
 
                             <FormControl isInvalid={invalid} mb={2}>
-                                <Input
-                                    onChangeText={onChange}
-                                    value={value}
-                                    type="password"
-                                    bg="gray.700"
-                                    borderWidth={2}
-                                    borderColor="transparent"
-                                    borderRadius={10}
+
+                                <HStack
+                                    alignItems="center"
                                     height={65}
-                                    fontFamily="body"
-                                    fontSize="sm"
-                                    px={5}
-                                    color="white.100"
-                                    placeholderTextColor="gray.300"
-                                    placeholder="Password"
+                                    bg="gray.700"
+                                    borderColor={invalid ? "red.700" : "transparent"}
+                                    borderWidth={2}
+                                    borderRadius={10}
                                     mb={4}
-                                    _focus={{
-                                        bg: "gray.700",
-                                        borderWidth: 1.5,
-                                        borderColor: "orange.700"
-                                    }}
+                                    px={5}
+                                >
+                                    <PasswordSvg width={24} height={24} />
 
-                                />
+                                    <Input
+                                        flex={1}
+                                        secureTextEntry
+                                        onChangeText={onChange}
+                                        value={value}
+                                        type="password"
+                                        bg="gray.700"
 
-                                <FormControl.ErrorMessage>
+                                        borderWidth={0}
+                                        fontFamily="body"
+                                        fontSize="sm"
+                                        color="white.100"
+                                        placeholderTextColor="gray.300"
+                                        placeholder="Password"
+
+                                        _focus={{
+                                            bg: "gray.700",
+                                            borderWidth: 0,
+                                            borderColor: "trasparent"
+                                        }}
+
+                                    />
+
+
+                                </HStack>
+
+
+
+                                <FormControl.ErrorMessage mt={-2} mb={2}>
                                     {errorMessage}
                                 </FormControl.ErrorMessage>
                             </FormControl>
@@ -280,30 +347,50 @@ export function Signup() {
 
                         return (
                             <FormControl isInvalid={invalid} mb={2}>
-                                < Input
-                                    onChangeText={onChange}
-                                    value={value}
-                                    type="password"
-                                    bg="gray.700"
-                                    borderWidth={2}
-                                    borderColor="transparent"
-                                    borderRadius={10}
-                                    height={65}
-                                    fontFamily="body"
-                                    fontSize="sm"
-                                    px={5}
-                                    color="white.100"
-                                    placeholderTextColor="gray.300"
-                                    placeholder="Password again"
-                                    mb={4}
-                                    _focus={{
-                                        bg: "gray.700",
-                                        borderWidth: 1.5,
-                                        borderColor: "orange.700"
-                                    }}
 
-                                />
-                                <FormControl.ErrorMessage>
+                                <HStack
+                                    alignItems="center"
+                                    height={65}
+                                    bg="gray.700"
+                                    borderColor={invalid ? "red.700" : "transparent"}
+                                    borderWidth={2}
+                                    borderRadius={10}
+                                    mb={4}
+                                    px={5}
+                                >
+                                    <PasswordSvg width={24} height={24} />
+
+
+                                    < Input
+
+                                        flex={1}
+                                        secureTextEntry
+                                        onChangeText={onChange}
+                                        value={value}
+                                        type="password"
+                                        bg="gray.700"
+
+                                        borderWidth={0}
+                                        borderRadius={10}
+                                        fontFamily="body"
+                                        fontSize="sm"
+                                        color="white.100"
+                                        placeholderTextColor="gray.300"
+                                        placeholder="Password again"
+
+                                        _focus={{
+                                            bg: "gray.700",
+                                            borderWidth: 0,
+                                            borderColor: "transparent"
+                                        }}
+
+
+
+                                    />
+
+
+                                </HStack>
+                                <FormControl.ErrorMessage mt={-2} >
                                     {errorMessage}
                                 </FormControl.ErrorMessage>
                             </FormControl>
@@ -342,7 +429,7 @@ export function Signup() {
 
                 <Button
                     px={8}
-                    mt={16}
+                    mt={12}
 
 
                     bg="orange.700"

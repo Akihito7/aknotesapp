@@ -6,12 +6,16 @@ import {
     Input,
     Button,
     Image,
-    ScrollView
+    ScrollView,
+    HStack
 } from "native-base"
 
-import { useNavigation } from "@react-navigation/native"
-import backgroundImg from "../../assets/back.png"
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigation } from "@react-navigation/native"
+
+import backgroundImg from "../../assets/back.png"
+import EmailSvg from "../../assets/E-mail.svg";
+import PasswordSvg from "../../assets/Senha.svg";
 
 import { Controller, useForm } from "react-hook-form";
 
@@ -92,28 +96,38 @@ export function Signln() {
                     name="email"
                     control={control}
                     render={({ field: { onChange, value } }) => (
-                        <Input
-                            onChangeText={onChange}
-                            value={value}
-                            bg="gray.700"
-                            borderWidth={2}
-                            borderColor="transparent"
-                            borderRadius={10}
+                        <HStack
+                            alignItems="center"
                             height={65}
-                            fontFamily="body"
-                            fontSize="sm"
-                            px={5}
-                            color="white.100"
-                            placeholderTextColor="gray.300"
-                            placeholder="E-mail"
+                            bg="gray.700"
+                            borderColor="transparent"
+                            borderWidth={2}
+                            borderRadius={10}
                             mb={4}
-                            _focus={{
-                                bg: "gray.700",
-                                borderWidth: 1.5,
-                                borderColor: "orange.700"
-                            }}
+                            px={5}
 
-                        />
+                        >
+                            < EmailSvg width={24} height={24} />
+
+                            <Input
+                                flex={1}
+                                onChangeText={onChange}
+                                value={value}
+                                fontFamily="body"
+                                borderColor="transparent"
+                                color="white.100"
+                                placeholderTextColor="gray.300"
+                                placeholder="E-mail"
+                                fontSize="sm"
+                                _focus={{
+                                    bg: "gray.700",
+                                    borderWidth: 1.5,
+                                    borderColor: "transparent"
+                                }}
+
+                            />
+
+                        </HStack>
                     )}
 
                 />
@@ -123,27 +137,38 @@ export function Signln() {
                     name="password"
                     control={control}
                     render={({ field: { onChange, value } }) => (
-                        <Input
-                            onChangeText={onChange}
-                            value={value}
-                            bg="gray.700"
-                            borderWidth={2}
-                            borderColor="transparent"
-                            borderRadius={10}
-                            height={65}
-                            fontFamily="body"
-                            fontSize="sm"
-                            px={5}
-                            color="white.100"
-                            placeholderTextColor="gray.300"
-                            placeholder="Password"
-                            _focus={{
-                                bg: "gray.700",
-                                borderWidth: 1.5,
-                                borderColor: "orange.700"
-                            }}
 
-                        />
+                        <HStack
+                            alignItems="center"
+                            height={65}
+                            bg="gray.700"
+                            borderColor="transparent"
+                            borderWidth={2}
+                            borderRadius={10}
+                            mb={4}
+                            px={5}
+                        >
+                            < PasswordSvg width={24} height={24} />
+
+                            <Input
+                                flex={1}
+                                onChangeText={onChange}
+                                value={value}
+                                bg="gray.700"
+                                fontFamily="body"
+                                fontSize="sm"
+                                color="white.100"
+                                borderColor="transparent"
+                                placeholderTextColor="gray.300"
+                                placeholder="Password"
+                                _focus={{
+                                    bg: "gray.700",
+                                    borderWidth: 1.5,
+                                    borderColor: "trasparent"
+                                }}
+
+                            />
+                        </HStack>
                     )}
                 />
 
