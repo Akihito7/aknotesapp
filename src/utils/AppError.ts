@@ -1,10 +1,10 @@
 class AppError {
     message;
-    status;
 
-
-    constructor(message : string , status : string){
+    constructor(message : string ){
         this.message = message;
-        this.status = status;
+        
     }
 };
+
+module.exports = {AppError} 
