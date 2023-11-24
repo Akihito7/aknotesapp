@@ -21,7 +21,7 @@ type PropsUser = {
 type PropsAuthContext = {
     user: PropsUser | undefined
     signln: (email: string, password: string) => void;
-    logout : () => void;
+    logout: () => void;
 }
 
 const AuthContext = createContext({} as PropsAuthContext);
@@ -30,6 +30,7 @@ const AuthContext = createContext({} as PropsAuthContext);
 function AuthContextProvider({ children }: { children: React.ReactNode }) {
 
     const CREDENTIALSLOGINASYNCSTORAGE = "@aknotes:user";
+    const TOKENASYNCSTORAGE = "@aknotes:token";
 
     const [user, setUser] = useState<PropsUser>();
 
@@ -39,9 +40,13 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
         try {
             const response = await api.post("/auth/signln", { email, password })
             setUser(response.data.user);
-        
+
             const CREDENTIALSLOGIN = { email, password };
+
             await AsyncStorage.setItem(CREDENTIALSLOGINASYNCSTORAGE, JSON.stringify(CREDENTIALSLOGIN));
+            await AsyncStorage.setItem(TOKENASYNCSTORAGE, JSON.stringify(response.data.token));
+
+            api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
 
         } catch (error) {
             console.log(error)

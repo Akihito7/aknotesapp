@@ -11,6 +11,8 @@ import {
     Toast,
 } from "native-base";
 
+import { useNavigation } from "@react-navigation/native"
+
 import { Controller, useForm } from "react-hook-form"
 
 import { Header } from "../components/Header";
@@ -36,6 +38,8 @@ export function NewNote() {
     const [tags, setTags] = useState([]);
 
     const { user } = useAuth();
+
+    const { navigate  } = useNavigation();
 
 
     function handleSaveLink(link: string) {
@@ -67,9 +71,11 @@ export function NewNote() {
                 title : "Nota cadastrada",
                 duration : 1000,
                 backgroundColor : THEME.colors.orange[700],
-
-                
             })
+
+            navigate("home");
+
+            navigate
 
 
         } catch (error) {
