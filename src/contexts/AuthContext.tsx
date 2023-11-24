@@ -7,6 +7,8 @@ import React, {
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { api } from "../services/axios";
+import AppError from "../utils/AppError";
+import { Toast } from "native-base";
 
 
 
@@ -49,14 +51,32 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
             api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
 
         } catch (error) {
-            console.log(error)
+
+            if (error instanceof AppError) {
+                Toast.show({
+                    title: error.message,
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+            else {
+                Toast.show({
+                    title: "Erro interno",
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
         }
     };
 
     async function tryLoginWithAsyncStorage() {
         const CREDENTIALSLOGIN = await AsyncStorage.getItem(CREDENTIALSLOGINASYNCSTORAGE) || "{}"
         const { email, password } = JSON.parse(CREDENTIALSLOGIN);
-        signln(email, password);
+
+        if (CREDENTIALSLOGIN) signln(email, password);
+
     };
 
     async function logout() {

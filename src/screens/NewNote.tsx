@@ -22,6 +22,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { api } from "../services/axios";
 import { THEME } from "../theme";
 import { useAuth } from "../contexts/AuthContext";
+import AppError from "../utils/AppError";
 
 type PropsNote = {
     name: string;
@@ -39,7 +40,7 @@ export function NewNote() {
 
     const { user } = useAuth();
 
-    const { navigate  } = useNavigation();
+    const { navigate } = useNavigation();
 
 
     function handleSaveLink(link: string) {
@@ -56,8 +57,8 @@ export function NewNote() {
 
         try {
             await api.post("/notes", {
-                user_id : user?.id,
-                name, 
+                user_id: user?.id,
+                name,
                 description: comments,
                 links: importantLinks,
                 tags
@@ -68,9 +69,9 @@ export function NewNote() {
             setTags([]);
 
             Toast.show({
-                title : "Nota cadastrada",
-                duration : 1000,
-                backgroundColor : THEME.colors.orange[700],
+                title: "Nota cadastrada",
+                duration: 1000,
+                backgroundColor: THEME.colors.orange[700],
             })
 
             navigate("home");
@@ -79,7 +80,22 @@ export function NewNote() {
 
 
         } catch (error) {
-            console.log(error)
+            if (error instanceof AppError) {
+                Toast.show({
+                    title: error.message,
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+            else {
+                Toast.show({
+                    title: "Erro interno",
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
         }
     }
 

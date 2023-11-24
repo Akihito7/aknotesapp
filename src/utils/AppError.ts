@@ -1,4 +1,4 @@
-class AppError {
+export default class AppError {
     message;
 
     constructor(message : string ){
@@ -7,4 +7,3 @@ class AppError {
     }
 };
 
-module.exports = {AppError} 

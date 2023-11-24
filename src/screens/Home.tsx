@@ -4,7 +4,8 @@ import {
     VStack,
     Input,
     Text,
-    FlatList
+    FlatList,
+    Toast
 } from "native-base";
 
 import { Header } from "../components/Header";
@@ -13,6 +14,7 @@ import { CardNotesHeader } from "../components/CardNotesHome";
 import { useAuth } from "../contexts/AuthContext";
 import { api } from "../services/axios";
 import { useNavigation } from "@react-navigation/native"
+import AppError from "../utils/AppError";
 
 type PropsItem = {
     note: {
@@ -37,7 +39,22 @@ export function Home() {
             const response = await api.get(`/notes/${user?.id}`);
             setNotes(response.data)
         } catch (error) {
-            console.log(error)
+            if (error instanceof AppError) {
+                Toast.show({
+                    title: error.message,
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+            else {
+                Toast.show({
+                    title: "Erro interno",
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
         }
     }
 

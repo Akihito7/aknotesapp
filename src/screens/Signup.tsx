@@ -6,7 +6,8 @@ import {
     Input,
     Button,
     FormControl,
-    HStack
+    HStack,
+    Toast
 } from "native-base";
 
 import NomeSvg from "../../assets/Nome.svg";
@@ -21,6 +22,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import backgroundImg from "../../assets/back.png"
 import { api } from "../services/axios";
+import AppError from "../utils/AppError";
 
 type PropSignup = {
     fullName: string;
@@ -59,7 +61,24 @@ export function Signup() {
             reset();
             handleToGoSignln();
         } catch (error) {
-            console.log(error)
+
+            if (error instanceof AppError) {
+                Toast.show({
+                    title : error.message,
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+            else {
+                Toast.show({
+                    title : "Erro interno",
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+
         }
     };
 

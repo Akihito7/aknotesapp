@@ -5,7 +5,8 @@ import {
     Link,
     HStack,
     Button,
-    ScrollView
+    ScrollView,
+    Toast
 
 } from "native-base";
 
@@ -15,6 +16,7 @@ import { Header } from "../components/Header";
 import { Tag } from "../components/Tag";
 import { useEffect, useState } from "react";
 import { api } from "../services/axios";
+import AppError from "../utils/AppError";
 
 
 type PropsNote = {
@@ -52,7 +54,22 @@ export function Details() {
             await api.delete(`/notes/${noteId}`);
             navigate("home");
         } catch (error) {
-            console.log(error)
+            if (error instanceof AppError) {
+                Toast.show({
+                    title : error.message,
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+            else {
+                Toast.show({
+                    title : "Erro interno",
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
         }
     }
 
