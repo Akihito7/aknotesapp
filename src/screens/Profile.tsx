@@ -1,16 +1,71 @@
 import { TouchableOpacity } from "react-native";
-import { HStack, VStack, Image, Input, Button, Text } from "native-base";
+import {
+    HStack,
+    VStack,
+    Image,
+    Input,
+    Button,
+    Text,
+    Toast
+} from "native-base";
 import { useAuth } from "../contexts/AuthContext";
+
+import { api } from "../services/axios";
+import { useForm, Controller } from "react-hook-form"
 
 import { THEME } from "../theme";
 import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import profile from "../../assets/profile.png"
+import AppError from "../utils/AppError";
 
+
+type PasswordProps = {
+    currentPassword: string;
+    newPassword: string;
+}
 export function Profile() {
 
     const { user } = useAuth();
+
+    const { control, handleSubmit } = useForm();
+
+    async function handleUpdatePassword({ currentPassword, newPassword }: PasswordProps) {
+        try {
+            await api.put("/user/update", {
+                currentPassword,
+                newPassword,
+            });
+
+            Toast.show({
+                title: "Senha atualizada",
+                duration: 3000,
+                bg: THEME.colors.orange[700],
+                placement: "top",
+            })
+
+
+        } catch (error) {
+            if (error instanceof AppError) {
+                Toast.show({
+                    title: error.message,
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+            else {
+                Toast.show({
+                    title: "Erro interno",
+                    duration: 3000,
+                    bg: "red.700",
+                    placement: "top",
+                })
+            }
+
+        }
+    }
 
     return (
         <VStack
@@ -110,52 +165,74 @@ export function Profile() {
                     }}
 
                 />
-                <Input
-                    mt={8}
-                    type="password"
-                    bg="gray.700"
-                    borderWidth={2}
-                    borderColor="transparent"
-                    borderRadius={10}
-                    height={65}
-                    fontFamily="body"
-                    fontSize="sm"
-                    px={5}
-                    color="white.100"
-                    placeholderTextColor="gray.300"
-                    placeholder="Current password"
-                    mb={4}
-                    _focus={{
-                        bg: "gray.700",
-                        borderWidth: 1.5,
-                        borderColor: "orange.700"
-                    }}
+
+                <Controller
+                    name="currentPassword"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <Input
+                            onChangeText={onChange}
+                            value={value}
+                            mt={8}
+                            type="password"
+                            bg="gray.700"
+                            borderWidth={2}
+                            borderColor="transparent"
+                            borderRadius={10}
+                            height={65}
+                            fontFamily="body"
+                            fontSize="sm"
+                            px={5}
+                            color="white.100"
+                            placeholderTextColor="gray.300"
+                            placeholder="Current password"
+                            mb={4}
+                            _focus={{
+                                bg: "gray.700",
+                                borderWidth: 1.5,
+                                borderColor: "orange.700"
+                            }}
+
+                        />
+
+                    )}
 
                 />
-                <Input
 
-                    type="password"
-                    bg="gray.700"
-                    borderWidth={2}
-                    borderColor="transparent"
-                    borderRadius={10}
-                    height={65}
-                    fontFamily="body"
-                    fontSize="sm"
-                    px={5}
-                    color="white.100"
-                    placeholderTextColor="gray.300"
-                    placeholder="New password"
-                    mb={4}
-                    _focus={{
-                        bg: "gray.700",
-                        borderWidth: 1.5,
-                        borderColor: "orange.700"
-                    }}
+                <Controller
+                    name="newPassword"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
 
+                        <Input
+                            onChangeText={onChange}
+                            value={value}
+                            type="password"
+                            bg="gray.700"
+                            borderWidth={2}
+                            borderColor="transparent"
+                            borderRadius={10}
+                            height={65}
+                            fontFamily="body"
+                            fontSize="sm"
+                            px={5}
+                            color="white.100"
+                            placeholderTextColor="gray.300"
+                            placeholder="New password"
+                            mb={4}
+                            _focus={{
+                                bg: "gray.700",
+                                borderWidth: 1.5,
+                                borderColor: "orange.700"
+                            }}
+
+                        />
+                    )}
                 />
+
 
                 <Button
+                    onPress={handleSubmit(handleUpdatePassword)}
                     alignItems="center"
                     justifyContent="center"
                     mt={8}
