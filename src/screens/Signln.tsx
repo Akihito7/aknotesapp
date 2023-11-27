@@ -41,9 +41,6 @@ export function Signln() {
         signln(email, password)
     }
 
-    useEffect(() => {
-
-    }, [])
     return (
 
         <ScrollView

@@ -16,6 +16,9 @@ import { useForm, Controller } from "react-hook-form"
 import { THEME } from "../theme";
 import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import PasswordSvg from "../../assets/Senha.svg";
+import NomeSvg from "../../assets/Nome.svg";
+import EmailSvg from "../../assets/E-mail.svg";
 
 import profile from "../../assets/profile.png"
 import AppError from "../utils/AppError";
@@ -121,113 +124,154 @@ export function Profile() {
                     top={"-10%"}
                     left="41%"
                 />
-
-                <Input
+                <HStack
+                    alignItems="center"
+                    height={65}
+                    bg="gray.700"
+                    borderColor="transparent"
+                    borderWidth={2}
+                    borderRadius={10}
+                    mb={4}
+                    px={5}
                     mt={24}
-                    bg="gray.700"
-                    borderWidth={2}
-                    borderColor="transparent"
-                    borderRadius={10}
-                    height={65}
-                    fontFamily="body"
-                    fontSize="sm"
-                    px={5}
-                    color="white.100"
-                    placeholderTextColor="gray.300"
-                    value={user?.name}
-                    isReadOnly={true}
-                    mb={4}
-                    _focus={{
-                        bg: "gray.700",
-                        borderWidth: 1.5,
-                        borderColor: "orange.700"
-                    }}
+                >
+                    <NomeSvg height={24} width={24} />
 
-                />
-                <Input
-                    bg="gray.700"
-                    borderWidth={2}
-                    borderColor="transparent"
-                    borderRadius={10}
-                    height={65}
-                    fontFamily="body"
-                    fontSize="sm"
-                    px={5}
-                    color="white.100"
-                    placeholderTextColor="gray.300"
-                    value={user?.email}
-                    isReadOnly={true}
-                    mb={4}
-                    _focus={{
-                        bg: "gray.700",
-                        borderWidth: 1.5,
-                        borderColor: "orange.700"
-                    }}
+                    <Input
+                        flex={1}
+                        bg="gray.700"
+                        borderColor="transparent"
+                        fontFamily="body"
+                        fontSize="sm"
+                        color="white.100"
+                        placeholderTextColor="gray.300"
+                        value={user?.name}
+                        isReadOnly={true}
+                    />
 
-                />
+                </HStack>
+
+                <HStack
+
+                    alignItems="center"
+                    height={65}
+                    bg="gray.700"
+                    borderColor="transparent"
+                    borderWidth={2}
+                    borderRadius={10}
+                    mb={4}
+                    px={5}
+
+                >
+
+                    <EmailSvg height={24} width={24} />
+                    <Input
+                        flex={1}
+                        bg="gray.700"
+                        borderColor="transparent"
+                        fontFamily="body"
+                        fontSize="sm"
+                        color="white.100"
+                        placeholderTextColor="gray.300"
+                        value={user?.email}
+                        isReadOnly={true}
+                    />
+
+                </HStack>
 
                 <Controller
                     name="currentPassword"
                     control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <Input
-                            onChangeText={onChange}
-                            value={value}
-                            mt={8}
-                            type="password"
-                            bg="gray.700"
-                            borderWidth={2}
-                            borderColor="transparent"
-                            borderRadius={10}
-                            height={65}
-                            fontFamily="body"
-                            fontSize="sm"
-                            px={5}
-                            color="white.100"
-                            placeholderTextColor="gray.300"
-                            placeholder="Current password"
-                            mb={4}
-                            _focus={{
-                                bg: "gray.700",
-                                borderWidth: 1.5,
-                                borderColor: "orange.700"
-                            }}
+                    render={({ field: { onChange, value } }) => {
 
-                        />
+                        return (
 
-                    )}
+
+                            <HStack
+                                alignItems="center"
+                                height={65}
+                                bg="gray.700"
+                                borderColor="transparent"
+                                borderWidth={2}
+                                borderRadius={10}
+                                mb={4}
+                                px={5}
+                                mt={8}
+                            >
+                                < PasswordSvg width={24} height={24} />
+
+                                <Input
+                                    flex={1}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    type="password"
+                                    bg="gray.700"
+                                    borderColor="transparent"
+                                    fontFamily="body"
+                                    fontSize="sm"
+                                    color="white.100"
+                                    placeholderTextColor="gray.300"
+                                    placeholder="Current password"
+
+                                    _focus={{
+                                        bg: "gray.700",
+                                        borderColor: "gray.700"
+                                    }}
+
+                                />
+
+                            </HStack>
+
+                        )
+
+                    }}
 
                 />
 
                 <Controller
                     name="newPassword"
                     control={control}
-                    render={({ field: { onChange, value } }) => (
+                    render={({ field: { onChange, value } }) => {
 
-                        <Input
-                            onChangeText={onChange}
-                            value={value}
-                            type="password"
-                            bg="gray.700"
-                            borderWidth={2}
-                            borderColor="transparent"
-                            borderRadius={10}
-                            height={65}
-                            fontFamily="body"
-                            fontSize="sm"
-                            px={5}
-                            color="white.100"
-                            placeholderTextColor="gray.300"
-                            placeholder="New password"
-                            mb={4}
-                            _focus={{
-                                bg: "gray.700",
-                                borderWidth: 1.5,
-                                borderColor: "orange.700"
-                            }}
+                        return (
 
-                        />
-                    )}
+                            <HStack
+                                alignItems="center"
+                                height={65}
+                                bg="gray.700"
+                                borderColor="transparent"
+                                borderWidth={2}
+                                borderRadius={10}
+                                mb={4}
+                                px={5}
+                            >
+                                < PasswordSvg width={24} height={24} />
+
+
+                                <Input
+                                    flex={1}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    type="password"
+                                    bg="gray.700"
+                                    borderColor="transparent"
+                                    fontFamily="body"
+                                    fontSize="sm"
+                                    color="white.100"
+                                    placeholderTextColor="gray.300"
+                                    placeholder="New password"
+
+                                    _focus={{
+                                        bg: "gray.700",
+                                        borderColor: "gray.700"
+                                    }}
+
+                                />
+                            </HStack>
+
+                        )
+
+                    }}
                 />
 
 
