@@ -30,8 +30,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 type PropsNote = {
     name: string;
     comments: string;
-    links: [string];
-    tags: [string];
+    links: string[];
+    tags: string[];
 };
 
 
@@ -40,6 +40,8 @@ export function NewNote() {
     const Schema = yup.object().shape({
         name: yup.string().required("Preencha o titulo"),
         comments: yup.string().required("Preencha a observações"),
+        newLink: yup.string()
+
     });
 
     const {
@@ -62,13 +64,35 @@ export function NewNote() {
 
 
     function handleSaveLink(link: string) {
-        setImportantLinks(prevState => [...prevState, link]);
-        setValue("newLink", "");
+
+        if (link) {
+            setImportantLinks(prevState => [...prevState, link]);
+            setValue("newLink", "");
+
+        } else {
+            Toast.show({
+                title : "Link não pode estar vazio",
+                duration : 3000,
+                placement : "top",
+                bg : "red.700",
+            })
+        }
     };
 
     function handleSaveTag(name: string) {
-        setTags(prevState => [...prevState, name]);
-        setValue("newMarker", "");
+
+        if(name){
+            setTags(prevState => [...prevState, name]);
+            setValue("newMarker", "");
+
+        } else {
+            Toast.show({
+                title : "Tag não pode estar vazia",
+                duration : 3000,
+                placement : "top",
+                bg : "red.700",
+            })
+        }
     };
 
     async function handleSaveNote({ name, comments }: PropsNote) {
