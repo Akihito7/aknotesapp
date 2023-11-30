@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import {
     HStack,
@@ -10,6 +11,9 @@ import {
     FormControl,
     ScrollView
 } from "native-base";
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
+
 import { useAuth } from "../contexts/AuthContext";
 
 import { api } from "../services/axios";
@@ -34,12 +38,12 @@ type PasswordProps = {
     newPassword: string;
 }
 export function Profile() {
+    const [image, setImage] = useState();
 
     const Schema = yup.object().shape({
         currentPassword: yup.string().min(6, "A senha deve conter no minimo 6 dígitos").required("O campo não pode estar vazio"),
         newPassword: yup.string().min(6, "A senha deve conter no minimo 6 dígitos").required("O campo não pode estar vazio")
     })
-
     const { user } = useAuth();
 
     const { control,
@@ -81,7 +85,53 @@ export function Profile() {
             }
 
         }
+    };
+
+    async function pickImage() {
+        let newPhoto = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            allowsMultipleSelection: false,
+            aspect: [4, 4],
+            quality: 1,
+        })
+
+        if (newPhoto.canceled) return;
+
+        if (newPhoto?.assets && newPhoto.assets[0]?.uri) {
+
+            const { uri } = newPhoto.assets[0];
+
+            const photoInfo = await FileSystem.getInfoAsync(uri);
+
+            if (photoInfo.size && (photoInfo.size / 1024) / 1024 > 5) {
+
+                return Toast.show({
+                    title: "Imagem muito grande, escolha uma imagem até 5MB",
+                    placement: 'top',
+                    bgColor: 'red.500',
+                })
+            }
+
+            setImage(uri)
+
+            const fileExtension = uri.split('.').pop();
+
+            const photoFile = {
+                name: `${user!.name}.${fileExtension}`.toLocaleLowerCase(),
+                uri,
+                type: `${newPhoto.assets[0].type}/${fileExtension}`
+            } as any;
+
+            const userPhotoFormUpload = new FormData();
+            userPhotoFormUpload.append('avatar', photoFile);
+
+        }
+
+
     }
+
+
 
     return (
         <ScrollView
@@ -136,18 +186,34 @@ export function Profile() {
                         position="absolute"
                         bottom="100%"
                     >
-                        <Image
-                            source={profile}
-                            defaultSource={profile}
-                            borderRadius={99}
-                            height={32}
-                            width={32}
-                            resizeMode="contain"
-                            alt="foto de perfil"
-                        />
+
+                        {
+                            image ?
+                                <Image
+                                    source={{ uri: image }}
+                                    borderRadius={99}
+                                    height={32}
+                                    width={32}
+                                    resizeMode="contain"
+                                    alt="foto de perfil"
+                                />
+
+                                :
+
+                                <Image
+                                    source={profile}
+                                    borderRadius={99}
+                                    height={32}
+                                    width={32}
+                                    resizeMode="contain"
+                                    alt="foto de perfil"
+                                />
+
+                        }
 
 
                         <TouchableOpacity
+                            onPress={pickImage}
                             style={{
                                 position: "absolute",
                                 bottom: "0%",
