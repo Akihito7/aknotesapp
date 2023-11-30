@@ -38,7 +38,7 @@ type PasswordProps = {
     newPassword: string;
 }
 export function Profile() {
-    const [image, setImage] = useState();
+
 
     const Schema = yup.object().shape({
         currentPassword: yup.string().min(6, "A senha deve conter no minimo 6 dígitos").required("O campo não pode estar vazio"),
@@ -113,18 +113,22 @@ export function Profile() {
                 })
             }
 
-            setImage(uri)
-
             const fileExtension = uri.split('.').pop();
 
             const photoFile = {
-                name: `${user!.name}.${fileExtension}`.toLocaleLowerCase(),
+                name: `${user!.name.split(" ").pop()}.${fileExtension}`.toLocaleLowerCase(),
                 uri,
                 type: `${newPhoto.assets[0].type}/${fileExtension}`
             } as any;
 
             const userPhotoFormUpload = new FormData();
             userPhotoFormUpload.append('avatar', photoFile);
+
+            await api.patch('/user/avatar', userPhotoFormUpload, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
 
         }
 
@@ -187,29 +191,15 @@ export function Profile() {
                         bottom="100%"
                     >
 
-                        {
-                            image ?
-                                <Image
-                                    source={{ uri: image }}
-                                    borderRadius={99}
-                                    height={32}
-                                    width={32}
-                                    resizeMode="contain"
-                                    alt="foto de perfil"
-                                />
+                        <Image
+                            source={{ uri: user?.imagem ? `https://drive.google.com/uc?id=${user.imagem}` : "https://w7.pngwing.com/pngs/213/343/png-transparent-computer-icons-user-background-icon-cdr-monochrome-name.png" }}
+                            borderRadius={99}
+                            height={32}
+                            width={32}
+                            resizeMode="contain"
+                            alt="foto de perfil"
+                        />
 
-                                :
-
-                                <Image
-                                    source={profile}
-                                    borderRadius={99}
-                                    height={32}
-                                    width={32}
-                                    resizeMode="contain"
-                                    alt="foto de perfil"
-                                />
-
-                        }
 
 
                         <TouchableOpacity
