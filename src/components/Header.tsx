@@ -12,10 +12,9 @@ import Profile from "../../assets/profile.png";
 
 import { useAuth } from "../contexts/AuthContext";
 
-
 export function Header() {
+    const { user, logout, image } = useAuth();
 
-    const { user, logout } = useAuth();
     return (
 
         <VStack>
@@ -27,9 +26,11 @@ export function Header() {
             >
 
                 <Image
-                    source={Profile}
+                    source={{ uri: image ? `https://drive.google.com/uc?id=${image}` : "https://cdn-icons-png.flaticon.com/512/1077/1077114.png" }}
                     borderRadius={99}
                     mr={4}
+                    w={20}
+                    height={20}
                     alt="imagem de perfil"
                 />
 
@@ -48,7 +49,7 @@ export function Header() {
                         fontSize={16}
                         color="white.100"
                     >
-                       {user?.name}
+                        {user?.name}
                     </Text>
                 </VStack>
 

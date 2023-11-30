@@ -24,6 +24,8 @@ type PropsAuthContext = {
     user: PropsUser | undefined
     signln: (email: string, password: string) => void;
     logout: () => void;
+    setImage : (idImage : string) => void;
+    image : string;
 }
 
 const AuthContext = createContext({} as PropsAuthContext);
@@ -35,6 +37,7 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
     const TOKENASYNCSTORAGE = "@aknotes:token";
 
     const [user, setUser] = useState<PropsUser>();
+    const [image, setImage] = useState<string>("")
 
 
 
@@ -108,6 +111,8 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
             user,
             signln,
             logout,
+            setImage,
+            image,
 
         }}>
             {children}

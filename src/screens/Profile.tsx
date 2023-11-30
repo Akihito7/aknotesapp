@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import {
     HStack,
@@ -39,12 +39,11 @@ type PasswordProps = {
 }
 export function Profile() {
 
-
     const Schema = yup.object().shape({
         currentPassword: yup.string().min(6, "A senha deve conter no minimo 6 dígitos").required("O campo não pode estar vazio"),
         newPassword: yup.string().min(6, "A senha deve conter no minimo 6 dígitos").required("O campo não pode estar vazio")
     })
-    const { user } = useAuth();
+    const { user, setImage, image } = useAuth();
 
     const { control,
         handleSubmit,
@@ -130,12 +129,19 @@ export function Profile() {
                 }
             });
 
+            setImage();
+
         }
-
-
     }
 
+    async function handleUpdateAvatar() {
+        const response = await api.get("/user/avatar");
+        setImage(response.data)
+    }
 
+    useEffect(() => {
+        handleUpdateAvatar();
+    }, [image])
 
     return (
         <ScrollView
@@ -192,7 +198,7 @@ export function Profile() {
                     >
 
                         <Image
-                            source={{ uri: user?.imagem ? `https://drive.google.com/uc?id=${user.imagem}` : "https://w7.pngwing.com/pngs/213/343/png-transparent-computer-icons-user-background-icon-cdr-monochrome-name.png" }}
+                            source={{ uri: image ? `https://drive.google.com/uc?id=${image}` : "https://cdn-icons-png.flaticon.com/512/1077/1077114.png" }}
                             borderRadius={99}
                             height={32}
                             width={32}
