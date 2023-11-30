@@ -84,6 +84,9 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
                 const response = await api.post("/auth/signln", { email, password })
                 setUser(response.data.user);
                 api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+
+                const imagem = await api.get("/user/avatar");
+                setImage(imagem.data)
             }
         } catch (error) {
             Toast.show({
@@ -102,6 +105,8 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         tryLoginWithAsyncStorage();
+        
+        
     }, []);
 
 

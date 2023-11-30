@@ -109,6 +109,7 @@ export function Profile() {
                     title: "Imagem muito grande, escolha uma imagem até 5MB",
                     placement: 'top',
                     bgColor: 'red.500',
+                    duration : 3000,
                 })
             }
 
@@ -123,13 +124,33 @@ export function Profile() {
             const userPhotoFormUpload = new FormData();
             userPhotoFormUpload.append('avatar', photoFile);
 
-            await api.patch('/user/avatar', userPhotoFormUpload, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            try {
+                await api.patch('/user/avatar', userPhotoFormUpload, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
 
-            setImage();
+                Toast.show({
+                    title : "Foto atualizada com sucesso",
+                    placement : "top",
+                    bgColor : "green.700",
+                    duration : 3000,
+
+                })
+                
+            } catch (error) {
+                    Toast.show({
+                    title : "Erro ao atualizar a foto",
+                    placement : "top",
+                    bgColor : "red.700",
+                    duration : 3000,
+                    
+                })
+            }
+
+
+            setImage("");
 
         }
     }
