@@ -72,11 +72,24 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
     };
 
     async function tryLoginWithAsyncStorage() {
+
         const CREDENTIALSLOGIN = await AsyncStorage.getItem(CREDENTIALSLOGINASYNCSTORAGE) || "{}"
         const { email, password } = JSON.parse(CREDENTIALSLOGIN);
 
-        if (CREDENTIALSLOGIN) signln(email, password);
-
+        try {
+            if (CREDENTIALSLOGIN) {
+                const response = await api.post("/auth/signln", { email, password })
+                setUser(response.data.user);
+                api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+            }
+        } catch (error) {
+            Toast.show({
+                title: "Não foi logar com os dados de login salvos no dispositivo",
+                duration: 3000,
+                bg: "red.700",
+                placement: "top",
+            })
+        }
     };
 
     async function logout() {
@@ -101,6 +114,7 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
         </AuthContext.Provider>
     )
 }
+
 
 
 function useAuth() {

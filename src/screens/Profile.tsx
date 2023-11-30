@@ -19,6 +19,7 @@ import * as yup from "yup";
 import { THEME } from "../theme";
 import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import PasswordSvg from "../../assets/Senha.svg";
 import NomeSvg from "../../assets/Nome.svg";
 import EmailSvg from "../../assets/E-mail.svg";
@@ -130,19 +131,40 @@ export function Profile() {
                     alignItems="center"
                     bg="gray.500"
                 >
-                    <Image
-                        source={profile}
-                        defaultSource={profile}
-                        borderRadius={99}
-                        height={32}
-                        width={32}
-                        resizeMode="contain"
-                        alt="foto de perfil"
 
+                    <VStack
                         position="absolute"
-                        top={"-10%"}
-                        left="41%"
-                    />
+                        bottom="100%"
+                    >
+                        <Image
+                            source={profile}
+                            defaultSource={profile}
+                            borderRadius={99}
+                            height={32}
+                            width={32}
+                            resizeMode="contain"
+                            alt="foto de perfil"
+                        />
+
+
+                        <TouchableOpacity
+                            style={{
+                                position: "absolute",
+                                bottom: "0%",
+                                right: "-5%",
+                            }}
+                        >
+                            <MaterialIcons name="add-photo-alternate"
+                                size={40}
+                                color={THEME.colors.orange[700]}
+                            />
+                        </TouchableOpacity>
+
+                    </VStack>
+
+
+
+
                     <HStack
                         alignItems="center"
                         height={65}
