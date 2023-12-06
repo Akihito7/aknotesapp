@@ -60,7 +60,7 @@ export function NewNote() {
 
     const { user } = useAuth();
 
-    const { navigate } = useNavigation();
+    const { navigate, goBack } = useNavigation();
 
 
     function handleSaveLink(link: string) {
@@ -175,7 +175,7 @@ export function NewNote() {
                             Criar nota
                         </Text>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={goBack}>
                             <Text color="gray.100">
                                 Voltar
                             </Text>

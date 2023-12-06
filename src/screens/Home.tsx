@@ -1,3 +1,4 @@
+import { TouchableOpacity } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -5,16 +6,18 @@ import {
     Input,
     Text,
     FlatList,
-    Toast
+    Toast,
 } from "native-base";
 
 import { Header } from "../components/Header";
 import { CardNotesHeader } from "../components/CardNotesHome";
+import PlusSvg from "../../assets/plus.svg"
 
 import { useAuth } from "../contexts/AuthContext";
 import { api } from "../services/axios";
 import { useNavigation } from "@react-navigation/native"
 import AppError from "../utils/AppError";
+import { THEME } from "../theme";
 
 type PropsItem = {
     note: {
@@ -62,6 +65,10 @@ export function Home() {
         navigate("details", {
             noteId
         });
+    }
+    
+    function handleToGoNewNote(){
+        navigate("newNote");
     }
 
     useFocusEffect(useCallback(() => {
@@ -133,6 +140,24 @@ export function Home() {
 
                 />
 
+                <TouchableOpacity
+                    onPress={handleToGoNewNote}
+                    style={{
+                    width : 64,
+                    height : 64,
+                    borderRadius : 99,
+                    backgroundColor : THEME.colors.orange[700],
+                    alignItems : "center",
+                    justifyContent : "center",
+                    position : "absolute",
+                    bottom : "7%",
+                    right : "7%"
+
+                    }}
+                
+                >
+                    <PlusSvg width={24} height={24} />
+                </TouchableOpacity>
 
             </VStack>
 

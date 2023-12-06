@@ -64,7 +64,7 @@ export function Signup() {
 
             if (error instanceof AppError) {
                 Toast.show({
-                    title : error.message,
+                    title: error.message,
                     duration: 3000,
                     bg: "red.700",
                     placement: "top",
@@ -72,7 +72,7 @@ export function Signup() {
             }
             else {
                 Toast.show({
-                    title : "Erro interno",
+                    title: "Erro interno",
                     duration: 3000,
                     bg: "red.700",
                     placement: "top",
@@ -149,7 +149,7 @@ export function Signup() {
 
                                     <NomeSvg width={24} height={24} />
                                     <Input
-
+                                        ml={4}
                                         flex={1}
                                         onChangeText={onChange}
                                         value={value}
@@ -203,6 +203,7 @@ export function Signup() {
                                     <NomeSvg width={24} height={24} />
 
                                     <Input
+                                        ml={4}
 
                                         flex={1}
                                         onChangeText={onChange}
@@ -260,6 +261,7 @@ export function Signup() {
                                     <EmailSvg width={24} height={24} />
 
                                     <Input
+                                        ml={4}
 
                                         flex={1}
                                         onChangeText={onChange}
@@ -321,6 +323,7 @@ export function Signup() {
                                     <PasswordSvg width={24} height={24} />
 
                                     <Input
+                                        ml={4}
                                         flex={1}
                                         secureTextEntry
                                         onChangeText={onChange}
@@ -381,6 +384,7 @@ export function Signup() {
 
 
                                     < Input
+                                        ml={4}
 
                                         flex={1}
                                         secureTextEntry

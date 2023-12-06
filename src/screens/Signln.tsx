@@ -107,6 +107,7 @@ export function Signln() {
                             < EmailSvg width={24} height={24} />
 
                             <Input
+                                ml={1}
                                 flex={1}
                                 onChangeText={onChange}
                                 value={value}
@@ -148,6 +149,7 @@ export function Signln() {
                             < PasswordSvg width={24} height={24} />
 
                             <Input
+                                ml={1}
                                 flex={1}
                                 onChangeText={onChange}
                                 value={value}

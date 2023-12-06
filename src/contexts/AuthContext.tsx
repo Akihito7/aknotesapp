@@ -35,7 +35,7 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
 
     const CREDENTIALSLOGINASYNCSTORAGE = "@aknotes:user";
     const TOKENASYNCSTORAGE = "@aknotes:token";
-
+''
     const [user, setUser] = useState<PropsUser>();
     const [image, setImage] = useState<string>("")
 

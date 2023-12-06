@@ -32,6 +32,8 @@ import profile from "../../assets/profile.png"
 import AppError from "../utils/AppError";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useNavigation } from "@react-navigation/native"
+
 
 type PasswordProps = {
     currentPassword: string;
@@ -39,11 +41,13 @@ type PasswordProps = {
 }
 export function Profile() {
 
+    const { goBack } = useNavigation();
+
     const Schema = yup.object().shape({
         currentPassword: yup.string().min(6, "A senha deve conter no minimo 6 dígitos").required("O campo não pode estar vazio"),
         newPassword: yup.string().min(6, "A senha deve conter no minimo 6 dígitos").required("O campo não pode estar vazio")
     })
-    const { user, setImage, image } = useAuth();
+    const { user, setImage, image, logout } = useAuth();
 
     const { control,
         handleSubmit,
@@ -109,7 +113,7 @@ export function Profile() {
                     title: "Imagem muito grande, escolha uma imagem até 5MB",
                     placement: 'top',
                     bgColor: 'red.500',
-                    duration : 3000,
+                    duration: 3000,
                 })
             }
 
@@ -132,20 +136,20 @@ export function Profile() {
                 });
 
                 Toast.show({
-                    title : "Foto atualizada com sucesso",
-                    placement : "top",
-                    bgColor : "green.700",
-                    duration : 3000,
+                    title: "Foto atualizada com sucesso",
+                    placement: "top",
+                    bgColor: "green.700",
+                    duration: 3000,
 
                 })
-                
+
             } catch (error) {
-                    Toast.show({
-                    title : "Erro ao atualizar a foto",
-                    placement : "top",
-                    bgColor : "red.700",
-                    duration : 3000,
-                    
+                Toast.show({
+                    title: "Erro ao atualizar a foto",
+                    placement: "top",
+                    bgColor: "red.700",
+                    duration: 3000,
+
                 })
             }
 
@@ -183,14 +187,14 @@ export function Profile() {
                     px={8}
                 >
 
-                    <TouchableOpacity activeOpacity={0.2}>
+                    <TouchableOpacity activeOpacity={0.2} onPress={goBack}>
                         <Octicons
                             name="arrow-left"
                             size={28}
                             color={THEME.colors.gray[100]} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity activeOpacity={0.2} >
+                    <TouchableOpacity activeOpacity={0.2} onPress={logout}>
 
                         <Ionicons
                             name="ios-power-sharp"
@@ -262,6 +266,7 @@ export function Profile() {
                         <NomeSvg height={24} width={24} />
 
                         <Input
+
                             flex={1}
                             bg="gray.700"
                             borderColor="transparent"
@@ -290,6 +295,7 @@ export function Profile() {
 
                         <EmailSvg height={24} width={24} />
                         <Input
+
                             flex={1}
                             bg="gray.700"
                             borderColor="transparent"
@@ -330,6 +336,7 @@ export function Profile() {
                                         < PasswordSvg width={24} height={24} />
 
                                         <Input
+
                                             flex={1}
                                             onChangeText={onChange}
                                             value={value}
@@ -385,6 +392,7 @@ export function Profile() {
 
 
                                         <Input
+
                                             flex={1}
                                             onChangeText={onChange}
                                             value={value}

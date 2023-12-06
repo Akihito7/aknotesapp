@@ -6,6 +6,8 @@ import {
     Text,
 } from "native-base";
 
+import { useNavigation } from "@react-navigation/native"
+
 import { THEME } from "../theme";
 import { Ionicons } from '@expo/vector-icons';
 import Profile from "../../assets/profile.png";
@@ -14,6 +16,13 @@ import { useAuth } from "../contexts/AuthContext";
 
 export function Header() {
     const { user, logout, image } = useAuth();
+
+    const { navigate } = useNavigation();
+
+    function handleToGoProfile() {
+        navigate("profile")
+    }
+
 
     return (
 
@@ -24,15 +33,18 @@ export function Header() {
                 px={30}
                 mt={16}
             >
+                <TouchableOpacity onPress={handleToGoProfile}>
+                    <Image
+                        source={{ uri: image ? `https://drive.google.com/uc?id=${image}` : "https://cdn-icons-png.flaticon.com/512/1077/1077114.png" }}
+                        borderRadius={99}
+                        mr={4}
+                        w={20}
+                        height={20}
+                        alt="imagem de perfil"
+                    />
 
-                <Image
-                    source={{ uri: image ? `https://drive.google.com/uc?id=${image}` : "https://cdn-icons-png.flaticon.com/512/1077/1077114.png" }}
-                    borderRadius={99}
-                    mr={4}
-                    w={20}
-                    height={20}
-                    alt="imagem de perfil"
-                />
+                </TouchableOpacity>
+
 
                 <VStack
                     justifyContent="center"

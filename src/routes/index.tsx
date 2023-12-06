@@ -10,11 +10,10 @@ export function Routes() {
 
     return (
         <NavigationContainer>
-
             {
                 user ? <AppRoutes /> : <AuthRoutes />
             }
-
+            
         </NavigationContainer>
     )
 }

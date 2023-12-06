@@ -33,13 +33,14 @@ type PropsItem = {
 
 export function Details() {
 
-    const { navigate } = useNavigation();
+    const { navigate, goBack } = useNavigation();
     const route = useRoute();
-    const { noteId } = route.params;
+    const { noteId } = route.params || {};
 
     const [item, setItem] = useState<PropsItem>();
 
     async function getNote() {
+
         try {
             const response = await api.get(`/notes/unique-note/${noteId}`)
             console.log(response.data.links);
@@ -56,7 +57,7 @@ export function Details() {
         } catch (error) {
             if (error instanceof AppError) {
                 Toast.show({
-                    title : error.message,
+                    title: error.message,
                     duration: 3000,
                     bg: "red.700",
                     placement: "top",
@@ -64,7 +65,7 @@ export function Details() {
             }
             else {
                 Toast.show({
-                    title : "Erro interno",
+                    title: "Erro interno",
                     duration: 3000,
                     bg: "red.700",
                     placement: "top",
@@ -194,6 +195,7 @@ export function Details() {
                     </HStack>
 
                     <Button
+                        onPress={goBack}
                         alignItems="center"
                         justifyContent="center"
                         mt={8}
